@@ -1,2 +1,1 @@
-advent.js is a simple library for calculating events in the Catholic liturgical calendar,
-especially the beginnings of the Liturgical seasons, which vary from year to year.
+AdventJS is a simple library for calculating events in the Catholic liturgical calendar, especially the beginnings of the Liturgical seasons, which vary from year to year.
