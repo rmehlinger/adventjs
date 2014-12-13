@@ -1,0 +1,14 @@
+{
+  "name": "advent-js",
+  "version": "0.1.0",
+  "main": "./src/advent.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "moment": ">= 1",
+    "moment-range": ">= 1"
+  }
+}
