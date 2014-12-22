@@ -12,7 +12,7 @@ function adventSunday(year){
 }
 
 function christmas(year){
-    return moment(new Date(year, 11, 25))
+    return moment(new Date(year, 11, 25));
 }
 
 function epiphany(year){
@@ -30,12 +30,12 @@ function easter(year) {
     var N = year - 19 * Math.floor(year/19);
     var K = Math.floor((century - 17)/25);
 
-    var I = century - Math.floor(century/4) - Math.floor((century - K)/3) + 19*N + 15;
-    I = I - 30*Math.floor((I/30));
-    I = I - Math.floor(I/28)*(1 - Math.floor(I/28)*Math.floor(29/(I + 1))*Math.floor((21 - N)/11));
+    var I = century - Math.floor(century/4) - Math.floor((century - K)/3) + 19 * N + 15;
+    I = I - 30 * Math.floor((I/30));
+    I = I - Math.floor(I/28) * (1 - Math.floor(I/28) * Math.floor(29/(I + 1)) * Math.floor((21 - N)/11));
 
     var J = year + Math.floor(year/4) + I + 2 - century + Math.floor(century/4);
-    J = J - 7*Math.floor(J/7);
+    J = J - 7 * Math.floor(J/7);
 
     var L = I - J;
 
@@ -135,10 +135,7 @@ function seasonOf(date){
         case triduum: return "Triduum";
         case easterSeason: return "Easter";
         case firstOrdinaryTime:
-        case secondOrdinaryTime: return "Ordinary Time"
+        case secondOrdinaryTime: return "Ordinary Time";
         default: return "Undefined Season"; // this should never happen
     }
 }
-
-console.log(christmas(2014));
-console.log(easter(2014));
