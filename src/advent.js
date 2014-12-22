@@ -42,7 +42,7 @@ function easter(year) {
     var month = 2 + Math.floor((L + 40)/44);
     var date = L + 28 - 31*Math.floor(month/4);
 
-    return moment(new Date(year, month, date));
+    return moment(new Date(year, month - 1, date));
 }
 
 function holySaturday(year){
