@@ -9,5 +9,8 @@
   "dependencies": {
     "moment": ">= 1",
     "moment-range": ">= 1"
+  },
+  "devDependencies": {
+    "qunit": "~1.16.0"
   }
 }
