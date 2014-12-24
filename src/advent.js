@@ -16,7 +16,7 @@ function christmas(year){
 }
 
 function epiphany(year){
-    return moment(year, 1, 8).day(0); // assumes, per USCCB, that Epiphany is celebrated Sunday between Jan 2 & 8.
+    return moment(year, 0, 8).day(0); // assumes, per USCCB, that Epiphany is celebrated Sunday between Jan 2 & 8.
 }
 
 function baptismOfTheLord(year){
