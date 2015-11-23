@@ -76,7 +76,7 @@ function pentecost(year) {
 // advent(2014).contains(christmas(2014)) returns false.
 
 function advent(year){
-    moment().range(
+    return moment().range(
         adventSunday(year), // 4th Sunday before Christmas
         christmas(year)
     );
@@ -118,7 +118,7 @@ function seasonOf(date){
     var result;
 
     for(var i = 0; i < seasonFuncs.length; i++){
-        if(seasonFuncs[i](year).contains()) {
+        if(seasonFuncs[i](year).contains(momentDate)) {
             result = seasonFuncs[i];
             break;
         }
