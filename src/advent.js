@@ -2,6 +2,10 @@ moment.fn.dayAfter = function(){
     return this.clone().add(1, 'days');
 };
 
+moment.fn.dayBefore = function(){
+    return this.clone().subtract(1, 'days');
+};
+
 // feasts
 
 function adventSunday(year){
@@ -82,34 +86,46 @@ function advent(year){
     );
 }
 
-function christmasSeason(year){
+// have to split the christmas season because it crosses the year boundary.
+function firstChristmasSeason(year){
     return moment().range(
-        christmas(year),
-        baptismOfTheLord(year + 1).dayAfter() // ends Sunday after Epiphany, the Baptism of the Lord
+        new Date(year, 0, 1),
+        baptismOfTheLord(year).dayAfter() // ends Sunday after Epiphany, the Baptism of the Lord
     );
 }
 
+function secondChristmasSeason(year){
+    return moment().range(
+        christmas(year),
+        new Date(year + 1, 0, 1)
+    )
+}
+
 function firstOrdinaryTime(year) {
-    return moment().range(baptismOfTheLord(year), ashWednesday(year));
+    return moment().range(baptismOfTheLord(year).dayAfter(), ashWednesday(year));
 }
 
 function lent(year){
-    return moment().range(ashWednesday(year), goodFriday(year));
+    return moment().range(ashWednesday(year), palmSunday(year));
+}
+
+function holyWeek(year){
+    return moment().range(palmSunday(year), holyThursday(year));
 }
 
 function triduum(year){
-    return moment().range(goodFriday(year), easter(year).add(1, 'days'));
+    return moment().range(holyThursday(year), easter(year));
 }
 
 function easterSeason(year){
-    return moment().range(easter(year).add(1, 'days'), pentecost(year).dayAfter());
+    return moment().range(easter(year), pentecost(year).dayAfter());
 }
 
 function secondOrdinaryTime(year) {
-    return moment().range(pentecost(year).add(1, 'days'), adventSunday(year));
+    return moment().range(pentecost(year).dayAfter(), adventSunday(year));
 }
 
-var seasonFuncs = [advent, christmasSeason, firstOrdinaryTime, lent, triduum, easterSeason, secondOrdinaryTime];
+var seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, holyWeek, triduum, easterSeason, secondOrdinaryTime];
 
 function seasonOf(date){
     var momentDate = moment(date);
@@ -118,7 +134,7 @@ function seasonOf(date){
     var result;
 
     for(var i = 0; i < seasonFuncs.length; i++){
-        if(seasonFuncs[i](year).contains(momentDate)) {
+        if(seasonFuncs[i](year).contains(momentDate, true)) {
             result = seasonFuncs[i];
             break;
         }
@@ -126,8 +142,10 @@ function seasonOf(date){
 
     switch(result){
         case advent: return "Advent";
-        case christmasSeason: return "Christmas";
+        case firstChristmasSeason:
+        case secondChristmasSeason: return "Christmas";
         case lent: return "Lent";
+        case holyWeek: return "Holy Week";
         case triduum: return "Triduum";
         case easterSeason: return "Easter";
         case firstOrdinaryTime:

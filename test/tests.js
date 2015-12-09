@@ -100,6 +100,39 @@ QUnit.test("Easter Sunday", function(assert) {
 
 QUnit.test("Advent Sunday", function(assert){
     for(var yr = 1994; yr < 2035; yr++) {
-        assert.equal(adventSunday(yr).format("MM-DD-YYYY"), adventDates[yr].format("MM-DD-YYYY"), "Easter " + yr + " falls on " + easterDates[yr].format("MM-DD-YYYY"));
+        assert.equal(adventSunday(yr).format("MM-DD-YYYY"), adventDates[yr].format("MM-DD-YYYY"), "Advent Sunday " + yr + " falls on " + adventDates[yr].format("MM-DD-YYYY"));
+    }
+});
+
+QUnit.test("seasonOfOk", function(assert){
+    var curDate = moment(new Date(2015, 0, 1));
+    for(var i = 0; i < 731; i++) { // two full years, including a leap year
+        curDate.add(1, 'days');
+        var season = seasonOf(curDate);
+        assert.ok(season);
+        assert.notStrictEqual(season, "Undefined Season")
+    }
+});
+
+QUnit.test("seasonOfEndpoints", function(assert){
+    for(var year=2000; year < 2100; year++) {
+        assert.strictEqual(seasonOf(adventSunday(year - 1)), "Advent");
+        assert.strictEqual(seasonOf(christmas(year - 1).dayBefore()), "Advent");
+        assert.strictEqual(seasonOf(christmas(year - 1)), "Christmas");
+        assert.strictEqual(seasonOf(epiphany(year)), "Christmas");
+        assert.strictEqual(seasonOf(baptismOfTheLord(year)), "Christmas");
+        assert.strictEqual(seasonOf(baptismOfTheLord(year).dayAfter()), "Ordinary Time");
+        assert.strictEqual(seasonOf(ashWednesday(year).dayBefore()), "Ordinary Time");
+        assert.strictEqual(seasonOf(ashWednesday(year)), "Lent");
+        assert.strictEqual(seasonOf(palmSunday(year).dayBefore()), "Lent");
+        assert.strictEqual(seasonOf(palmSunday(year)), "Holy Week");
+        assert.strictEqual(seasonOf(holyThursday(year).dayBefore()), "Holy Week");
+        assert.strictEqual(seasonOf(holyThursday(year)), "Triduum");
+        assert.strictEqual(seasonOf(goodFriday(year)), "Triduum");
+        assert.strictEqual(seasonOf(holySaturday(year)), "Triduum");
+        assert.strictEqual(seasonOf(easter(year)), "Easter");
+        assert.strictEqual(seasonOf(ascension(year)), "Easter");
+        assert.strictEqual(seasonOf(pentecost(year)), "Easter");
+        assert.strictEqual(seasonOf(pentecost(year).dayAfter()), "Ordinary Time");
     }
 });
