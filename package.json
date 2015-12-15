@@ -1,5 +1,5 @@
 {
-  "name": "moment-range",
+  "name": "advent-js",
   "description": "Javascript Library for calculating Catholic Liturgical Calendar",
   "author": "Richard Mehlinger <rmehlinger@gmail.com> (http://www.rmehlinger.com)",
   "homepage": "https://github.com/rmehlinger/adventjs",
@@ -13,8 +13,8 @@
     "node": "*"
   },
   "dependencies": {
-    "moment": ">= 1",
-    "moment-range": ">= 1"
+    "moment": "^2.10.6",
+    "moment-range": "^2.0.3"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "license": {
     "type": "Public Domain",
     "url": "https://github.com/rmehlinger/adventjs/raw/master/LICENSE"
+  },
+  "devDependencies": {
+    "qunit": "^0.7.7"
   }
 }
