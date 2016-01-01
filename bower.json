@@ -7,8 +7,8 @@
     "components"
   ],
   "dependencies": {
-    "moment": ">= 1",
-    "moment-range": ">= 1"
+    "moment": "~2.10.6",
+    "moment-range": "~2.1.0"
   },
   "devDependencies": {
     "qunit": "~1.16.0"

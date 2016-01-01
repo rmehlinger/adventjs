@@ -8,13 +8,13 @@
   "directories": {
     "src": "./src"
   },
-  "version": "0.1.0",
+  "version": "0.2.2",
   "engines": {
     "node": "*"
   },
   "dependencies": {
     "moment": "^2.10.6",
-    "moment-range": "^2.0.3"
+    "moment-range": "^2.1.0"
   },
   "repository": {
     "type": "git",
