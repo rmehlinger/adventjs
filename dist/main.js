@@ -148,11 +148,11 @@
     }
 
     function lent(year) {
-        return (0, _moment2.default)().range(ashWednesday(year), palmSunday(year));
+        return (0, _moment2.default)().range(ashWednesday(year), holyThursday(year));
     }
 
     function holyWeek(year) {
-        return (0, _moment2.default)().range(palmSunday(year), holyThursday(year));
+        return (0, _moment2.default)().range(palmSunday(year), easter(year).dayAfter());
     }
 
     function triduum(year) {
@@ -167,7 +167,7 @@
         return (0, _moment2.default)().range(pentecost(year).dayAfter(), adventSunday(year));
     }
 
-    var seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, holyWeek, triduum, easterSeason, secondOrdinaryTime];
+    var seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, triduum, easterSeason, secondOrdinaryTime];
 
     function seasonOf(date) {
         var momentDate = (0, _moment2.default)(date);
@@ -190,8 +190,6 @@
                 return "Christmas";
             case lent:
                 return "Lent";
-            case holyWeek:
-                return "Holy Week";
             case triduum:
                 return "Triduum";
             case easterSeason:

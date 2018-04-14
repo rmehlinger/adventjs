@@ -109,11 +109,11 @@ export function firstOrdinaryTime(year) {
 }
 
 export function lent(year){
-    return moment().range(ashWednesday(year), palmSunday(year));
+    return moment().range(ashWednesday(year), holyThursday(year));
 }
 
 export function holyWeek(year){
-    return moment().range(palmSunday(year), holyThursday(year));
+    return moment().range(palmSunday(year), easter(year).dayAfter());
 }
 
 export function triduum(year){
@@ -128,7 +128,16 @@ export function secondOrdinaryTime(year) {
     return moment().range(pentecost(year).dayAfter(), adventSunday(year));
 }
 
-let seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, holyWeek, triduum, easterSeason, secondOrdinaryTime];
+let seasonFuncs = [
+  advent,
+  firstChristmasSeason,
+  secondChristmasSeason,
+  firstOrdinaryTime,
+  lent,
+  triduum,
+  easterSeason,
+  secondOrdinaryTime
+];
 
 export function seasonOf(date){
     let momentDate = moment(date);
@@ -148,7 +157,6 @@ export function seasonOf(date){
         case firstChristmasSeason:
         case secondChristmasSeason: return "Christmas";
         case lent: return "Lent";
-        case holyWeek: return "Holy Week";
         case triduum: return "Triduum";
         case easterSeason: return "Easter";
         case firstOrdinaryTime:

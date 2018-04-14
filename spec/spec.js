@@ -148,8 +148,8 @@ describe('adventjs', () => {
             expect(seasonOf(ashWednesday(year).dayBefore())).toBe("Ordinary Time");
             expect(seasonOf(ashWednesday(year))).toBe("Lent");
             expect(seasonOf(palmSunday(year).dayBefore())).toBe("Lent");
-            expect(seasonOf(palmSunday(year))).toBe("Holy Week");
-            expect(seasonOf(holyThursday(year).dayBefore())).toBe("Holy Week");
+            expect(seasonOf(palmSunday(year))).toBe("Lent");
+            expect(seasonOf(holyThursday(year).dayBefore())).toBe("Lent");
             expect(seasonOf(holyThursday(year))).toBe("Triduum");
             expect(seasonOf(goodFriday(year))).toBe("Triduum");
             expect(seasonOf(holySaturday(year))).toBe("Triduum");
