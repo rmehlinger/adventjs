@@ -5,7 +5,7 @@
   "homepage": "https://github.com/rmehlinger/adventjs",
   "bugs": "https://github.com/rmehlinger/adventjs/issues",
   "main": "dist/main.min.js",
-  "version": "0.2.2",
+  "version": "0.2.0",
   "engines": {
     "node": "*"
   },
