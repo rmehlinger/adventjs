@@ -1,4 +1,23 @@
-var adventDates = {
+jasmine.CATCH_EXCEPTIONS = false;
+import moment from 'moment';
+import 'moment-range';
+import {
+  adventSunday,
+  ascension,
+  ashWednesday,
+  baptismOfTheLord,
+  christmas,
+  easter,
+  epiphany,
+  goodFriday,
+  holySaturday,
+  holyThursday,
+  palmSunday,
+  pentecost,
+  seasonOf
+} from "../src/main";
+
+let adventDates = {
     1994: moment(new Date(1994, 10, 27)),
     1995: moment(new Date(1995, 11, 3)),
     1996: moment(new Date(1996, 11, 1)),
@@ -42,7 +61,7 @@ var adventDates = {
     2034: moment(new Date(2034, 11, 3))
 };
 
-var easterDates = {
+let easterDates = {
     1994: moment(new Date(1994, 3, 3)),
     1995: moment(new Date(1995, 3, 16)),
     1996: moment(new Date(1996, 3, 7)),
@@ -86,53 +105,58 @@ var easterDates = {
     2034: moment(new Date(2034, 3, 9))
 };
 
-QUnit.test("Christmas Day", function(assert) {
-    for(var yr = 2014; yr < 2114; yr++) {
-        assert.equal(christmas(yr).format("MM-DD-YYYY"), "12-25-" + (yr).toString(), "Christmas is December 25, " + (yr).toString());
-    }
-});
+describe('adventjs', () => {
+    it("Christmas Day", () => {
+        for(let yr = 2014; yr < 2114; yr++) {
+            expect(christmas(yr).format("MM-DD-YYYY")).toBe("12-25-" + (yr).toString());
+        }
+    });
 
-QUnit.test("Easter Sunday", function(assert) {
-    for(var yr = 1994; yr < 2035; yr++) {
-        assert.equal(easter(yr).format("MM-DD-YYYY"), easterDates[yr].format("MM-DD-YYYY"), "Easter " + yr + " falls on " + easterDates[yr].format("MM-DD-YYYY"));
-    }
-});
+    it("Easter Sunday", () => {
+        for(let yr = 1994; yr < 2035; yr++) {
+            expect(easter(yr).format("MM-DD-YYYY")).toBe(easterDates[yr].format("MM-DD-YYYY"));
+        }
+    });
 
-QUnit.test("Advent Sunday", function(assert){
-    for(var yr = 1994; yr < 2035; yr++) {
-        assert.equal(adventSunday(yr).format("MM-DD-YYYY"), adventDates[yr].format("MM-DD-YYYY"), "Advent Sunday " + yr + " falls on " + adventDates[yr].format("MM-DD-YYYY"));
-    }
-});
+    it("Advent Sunday", () =>{
+        for(let yr = 1994; yr < 2035; yr++) {
+            expect(adventSunday(yr).format("MM-DD-YYYY")).toBe(adventDates[yr].format("MM-DD-YYYY"));
+        }
+    });
 
-QUnit.test("seasonOfOk", function(assert){
-    var curDate = moment(new Date(2015, 0, 1));
-    for(var i = 0; i < 731; i++) { // two full years, including a leap year
-        curDate.add(1, 'days');
-        var season = seasonOf(curDate);
-        assert.ok(season);
-        assert.notStrictEqual(season, "Undefined Season")
-    }
-});
+    it("seasonOfOk", () =>{
+        let curDate = moment(new Date(2015, 0, 1));
+        let season;
+        for(let i = 0; i < 731; i++) { // two full years, including a leap year
+            curDate = curDate.dayAfter();
+            season = seasonOf(curDate);
+            expect(season).not.toBeUndefined();
+            expect(season).not.toBeNull();
+            expect(season).not.toBe("Undefined Season", curDate);
+        }
+    });
 
-QUnit.test("seasonOfEndpoints", function(assert){
-    for(var year=2000; year < 2100; year++) {
-        assert.strictEqual(seasonOf(adventSunday(year - 1)), "Advent");
-        assert.strictEqual(seasonOf(christmas(year - 1).dayBefore()), "Advent");
-        assert.strictEqual(seasonOf(christmas(year - 1)), "Christmas");
-        assert.strictEqual(seasonOf(epiphany(year)), "Christmas");
-        assert.strictEqual(seasonOf(baptismOfTheLord(year)), "Christmas");
-        assert.strictEqual(seasonOf(baptismOfTheLord(year).dayAfter()), "Ordinary Time");
-        assert.strictEqual(seasonOf(ashWednesday(year).dayBefore()), "Ordinary Time");
-        assert.strictEqual(seasonOf(ashWednesday(year)), "Lent");
-        assert.strictEqual(seasonOf(palmSunday(year).dayBefore()), "Lent");
-        assert.strictEqual(seasonOf(palmSunday(year)), "Holy Week");
-        assert.strictEqual(seasonOf(holyThursday(year).dayBefore()), "Holy Week");
-        assert.strictEqual(seasonOf(holyThursday(year)), "Triduum");
-        assert.strictEqual(seasonOf(goodFriday(year)), "Triduum");
-        assert.strictEqual(seasonOf(holySaturday(year)), "Triduum");
-        assert.strictEqual(seasonOf(easter(year)), "Easter");
-        assert.strictEqual(seasonOf(ascension(year)), "Easter");
-        assert.strictEqual(seasonOf(pentecost(year)), "Easter");
-        assert.strictEqual(seasonOf(pentecost(year).dayAfter()), "Ordinary Time");
-    }
+    it("seasonOfEndpoints", () =>{
+        for(let year=2000; year < 2100; year++) {
+            expect(seasonOf(adventSunday(year - 1).dayBefore())).toBe("Ordinary Time");
+            expect(seasonOf(adventSunday(year - 1))).toBe("Advent");
+            expect(seasonOf(christmas(year - 1).dayBefore())).toBe("Advent");
+            expect(seasonOf(christmas(year - 1))).toBe("Christmas");
+            expect(seasonOf(epiphany(year))).toBe("Christmas");
+            expect(seasonOf(baptismOfTheLord(year))).toBe("Christmas");
+            expect(seasonOf(baptismOfTheLord(year).dayAfter())).toBe("Ordinary Time");
+            expect(seasonOf(ashWednesday(year).dayBefore())).toBe("Ordinary Time");
+            expect(seasonOf(ashWednesday(year))).toBe("Lent");
+            expect(seasonOf(palmSunday(year).dayBefore())).toBe("Lent");
+            expect(seasonOf(palmSunday(year))).toBe("Holy Week");
+            expect(seasonOf(holyThursday(year).dayBefore())).toBe("Holy Week");
+            expect(seasonOf(holyThursday(year))).toBe("Triduum");
+            expect(seasonOf(goodFriday(year))).toBe("Triduum");
+            expect(seasonOf(holySaturday(year))).toBe("Triduum");
+            expect(seasonOf(easter(year))).toBe("Easter");
+            expect(seasonOf(ascension(year))).toBe("Easter");
+            expect(seasonOf(pentecost(year))).toBe("Easter");
+            expect(seasonOf(pentecost(year).dayAfter())).toBe("Ordinary Time");
+        }
+    });
 });

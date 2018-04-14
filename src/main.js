@@ -1,3 +1,6 @@
+import moment from 'moment';
+import 'moment-range';
+
 moment.fn.dayAfter = function(){
     return this.clone().add(1, 'days');
 };
@@ -8,68 +11,68 @@ moment.fn.dayBefore = function(){
 
 // feasts
 
-function adventSunday(year){
-    var christmasDay = christmas(year);
-    var adjustment = christmasDay.day() == 0 ? -7: 0; // if Christmas is a Sunday, we need to go back one week further
+export function adventSunday(year){
+    let christmasDay = christmas(year);
+    let adjustment = christmasDay.day() == 0 ? -7: 0; // if Christmas is a Sunday, we need to go back one week further
 
     return christmasDay.day(-21 + adjustment);
 }
 
-function christmas(year){
+export function christmas(year){
     return moment(new Date(year, 11, 25));
 }
 
-function epiphany(year){
+export function epiphany(year){
     return moment(new Date(year, 0, 8)).day(0); // assumes, per USCCB, that Epiphany is celebrated Sunday between Jan 2 & 8.
 }
 
-function baptismOfTheLord(year){
+export function baptismOfTheLord(year){
     return epiphany(year).day(7);
 }
 
-function easter(year) {
+export function easter(year) {
     // source: http://www.irt.org/articles/js052/
 
-    var century = Math.floor(year/100);
-    var N = year - 19 * Math.floor(year/19);
-    var K = Math.floor((century - 17)/25);
-    var I = century - Math.floor(century/4) - Math.floor((century - K)/3) + 19 * N + 15;
+    let century = Math.floor(year/100);
+    let N = year - 19 * Math.floor(year/19);
+    let K = Math.floor((century - 17)/25);
+    let I = century - Math.floor(century/4) - Math.floor((century - K)/3) + 19 * N + 15;
     I = I - 30 * Math.floor((I/30));
     I = I - Math.floor(I/28) * (1 - Math.floor(I/28) * Math.floor(29/(I + 1)) * Math.floor((21 - N)/11));
-    var J = year + Math.floor(year/4) + I + 2 - century + Math.floor(century/4);
+    let J = year + Math.floor(year/4) + I + 2 - century + Math.floor(century/4);
     J = J - 7 * Math.floor(J/7);
-    var L = I - J;
-    var month = 3 + Math.floor((L + 40)/44);
-    var day = L + 28 - 31 * Math.floor(month/4);
+    let L = I - J;
+    let month = 3 + Math.floor((L + 40)/44);
+    let day = L + 28 - 31 * Math.floor(month/4);
 
     return moment(new Date(year, month - 1, day));
 }
 
-function holySaturday(year){
+export function holySaturday(year){
     return easter(year).subtract(1, 'days');
 }
 
-function goodFriday(year){
+export function goodFriday(year){
     return easter(year).subtract(2, 'days');
 }
 
-function holyThursday(year){
+export function holyThursday(year){
     return easter(year).subtract(3, 'days');
 }
 
-function palmSunday(year){
+export function palmSunday(year){
     return easter(year).subtract(7, 'days');
 }
 
-function ashWednesday(year) {
+export function ashWednesday(year) {
     return easter(year).subtract(46, 'days');
 }
 
-function ascension(year) {
+export function ascension(year) {
     return easter(year).add(39, 'days');
 }
 
-function pentecost(year) {
+export function pentecost(year) {
     return easter(year).add(49, 'days');
 }
 
@@ -79,7 +82,7 @@ function pentecost(year) {
 // Thus, even though Advent is specified as ending on Christmas,
 // advent(2014).contains(christmas(2014)) returns false.
 
-function advent(year){
+export function advent(year){
     return moment().range(
         adventSunday(year), // 4th Sunday before Christmas
         christmas(year)
@@ -87,53 +90,53 @@ function advent(year){
 }
 
 // have to split the christmas season because it crosses the year boundary.
-function firstChristmasSeason(year){
+export function firstChristmasSeason(year){
     return moment().range(
         new Date(year, 0, 1),
         baptismOfTheLord(year).dayAfter() // ends Sunday after Epiphany, the Baptism of the Lord
     );
 }
 
-function secondChristmasSeason(year){
+export function secondChristmasSeason(year){
     return moment().range(
         christmas(year),
         new Date(year + 1, 0, 1)
     )
 }
 
-function firstOrdinaryTime(year) {
+export function firstOrdinaryTime(year) {
     return moment().range(baptismOfTheLord(year).dayAfter(), ashWednesday(year));
 }
 
-function lent(year){
+export function lent(year){
     return moment().range(ashWednesday(year), palmSunday(year));
 }
 
-function holyWeek(year){
+export function holyWeek(year){
     return moment().range(palmSunday(year), holyThursday(year));
 }
 
-function triduum(year){
+export function triduum(year){
     return moment().range(holyThursday(year), easter(year));
 }
 
-function easterSeason(year){
+export function easterSeason(year){
     return moment().range(easter(year), pentecost(year).dayAfter());
 }
 
-function secondOrdinaryTime(year) {
+export function secondOrdinaryTime(year) {
     return moment().range(pentecost(year).dayAfter(), adventSunday(year));
 }
 
-var seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, holyWeek, triduum, easterSeason, secondOrdinaryTime];
+let seasonFuncs = [advent, firstChristmasSeason, secondChristmasSeason, firstOrdinaryTime, lent, holyWeek, triduum, easterSeason, secondOrdinaryTime];
 
-function seasonOf(date){
-    var momentDate = moment(date);
-    var year = momentDate.year();
+export function seasonOf(date){
+    let momentDate = moment(date);
+    let year = momentDate.year();
 
-    var result;
+    let result;
 
-    for(var i = 0; i < seasonFuncs.length; i++){
+    for(let i = 0; i < seasonFuncs.length; i++){
         if(seasonFuncs[i](year).contains(momentDate, true)) {
             result = seasonFuncs[i];
             break;

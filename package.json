@@ -4,27 +4,34 @@
   "author": "Richard Mehlinger <rmehlinger@gmail.com> (http://www.rmehlinger.com)",
   "homepage": "https://github.com/rmehlinger/adventjs",
   "bugs": "https://github.com/rmehlinger/adventjs/issues",
-  "main": "./src/advent.js",
-  "directories": {
-    "src": "./src"
-  },
+  "main": "dist/main.min.js",
   "version": "0.2.2",
   "engines": {
     "node": "*"
-  },
-  "dependencies": {
-    "moment": "^2.10.6",
-    "moment-range": "^2.1.0"
   },
   "repository": {
     "type": "git",
     "url": "https://git@github.com/rmehlinger/adventjs.git"
   },
-  "license": {
-    "type": "Public Domain",
-    "url": "https://github.com/rmehlinger/adventjs/raw/master/LICENSE"
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run babel && npm run minify",
+    "babel": "babel src/main.js --out-file dist/main.js --source-maps",
+    "clean": "rm -rf dist && mkdir dist",
+    "minify": "uglifyjs -mc --source-map --screw-ie8 -o dist/main.min.js dist/main.js",
+    "typescript": "",
+    "test": "babel-node spec/run.js"
+  },
+  "dependencies": {
+    "moment": "^2.10.6",
+    "moment-range": "^2.1.0"
   },
   "devDependencies": {
-    "qunit": "^0.7.7"
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "jasmine": "^2.6.0",
+    "jasmine-core": "^2.5.2",
+    "uglify-es": "^3.0.23"
   }
 }
