@@ -49,10 +49,15 @@ timestamp. Returns the liturgical season of that date. Possible return values ar
 `Advent, Christmas, Lent, Triduum, Easter, Ordinary Time`
 
 # Installing
-## Bower
+## NPM
 From your shell, run:
-```bower install adventjs```
+```npm install adventjs```
+
+Then, in your code,
 
 # Running tests
 
-Unit tests for `adventjs` are written using QUnit. To run the tests, first, navigate to your code repository in the shell, and run `bower install`. Then, open `tests/test.html` in your browser.
+Unit tests for `adventjs` are written using Jasmine. To run the tests, run `npm install` and then `npm run test`.
+
+# Pull requests
+If you'd like to submit a pull request, please run `npm run build`, and include the updated dist files in your commit.
